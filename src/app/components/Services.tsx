@@ -42,13 +42,7 @@ const services = [
     description: 'A luxurious massage that uses heated stones to melt away tension and promote deep relaxation.',
     price: '$120',
     image: '/services/hotStoneMassage.jpeg',
-  },
-  {
-    name: 'Aromatherapy Massage',
-    description: 'A soothing massage that combines gentle pressure with the therapeutic benefits of essential oils.',
-    price: '$100',
-    image: '/services/aromatherapyMassage.jpeg',
-  },
+  }
 ]
 
 export default function Services() {
