@@ -4,43 +4,43 @@ const services = [
   {
     name: 'Swedish Massage',
     description: 'A gentle, relaxing massage that uses long strokes to ease tension and promote circulation.',
-    price: '$80',
+    price: '₹ 1599',
     image: '/services/swedishMassage.jpeg',
   },
   {
     name: 'Deep Tissue Massage',
     description: 'A therapeutic massage that targets deep layers of muscle to relieve chronic pain and tension.',
-    price: '$100',
+    price: '₹ 2000',
     image: '/services/deepTissueMassage1.jpg',
   },
   {
     name: 'Head Massage',
     description: 'A head massage relieves stress, improves circulation, and promotes relaxation and well-being.',
-    price: '$120',
+    price: '₹ 999',
     image: '/services/headMassage.jpeg',
   },
   {
     name: 'Foot Massage',
     description: 'A Foot massage relieves tension, improves circulation, and promotes overall relaxation and well-being.',
-    price: '$140',
+    price: '₹ 999',
     image: '/services/footMassage.jpeg',
   },
   {
     name: 'Hand Massage',
     description: 'A Hand massage relaxes muscles, improves circulation, and promotes overall hand wellness.',
-    price: '$150',
+    price: '₹ 999',
     image: '/services/handMassage.jpeg',
   },
   {
     name: 'Full Body Massage',
     description: 'A Full body massage offers relaxation, stress relief, improved circulation, and overall wellness.',
-    price: '$200',
+    price: '₹ 1999',
     image: '/services/fullBodyMassage.jpg',
   },
   {
     name: 'Hot Stone Massage',
     description: 'A luxurious massage that uses heated stones to melt away tension and promote deep relaxation.',
-    price: '$120',
+    price: '₹ 120',
     image: '/services/hotStoneMassage.jpeg',
   }
 ]
