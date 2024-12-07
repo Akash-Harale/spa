@@ -36,7 +36,7 @@ export default function Home() {
                 setCurrentPhrase((prev) => (prev + 1) % phrases.length);
                 setIsFadingOut(false);
             }, 500); // Matches the fade-out duration
-        }, 3400); // Total time before switching phrases (including fade animation)
+        }, 3000); // Total time before switching phrases (including fade animation)
         return () => clearInterval(interval);
     }, [phrases.length]);
 
