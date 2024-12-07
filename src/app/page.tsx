@@ -4,6 +4,7 @@ import Services from './components/Services'
 import BookServices from './components/BookServices'
 import AboutUs from './components/AboutUs'
 import Footer from './components/Footer'
+import TestimonialsSection from './components/Testimonials'
 
 export default function Page() {
   return (
@@ -20,6 +21,9 @@ export default function Page() {
       </section>
       <section id="about">
         <AboutUs />
+      </section>
+      <section id="testimonials">
+        <TestimonialsSection />
       </section>
       <Footer />
     </main>
