@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/image';
 
 const services = [
   {
@@ -10,7 +10,7 @@ const services = [
   {
     name: 'Deep Tissue Massage',
     description: 'A therapeutic massage that targets deep layers of muscle to relieve chronic pain and tension.',
-    price: '₹ 2000',
+    price: '₹ 1999',
     image: '/services/deepTissueMassage1.jpg',
   },
   {
@@ -32,6 +32,12 @@ const services = [
     image: '/services/handMassage.jpeg',
   },
   {
+    name: 'Neck Massage',
+    description: 'A Relieve tension and improve flexibility with a soothing, therapeutic neck massage.',
+    price: '₹ 999',
+    image: '/services/neckMassage.jpg',
+  },
+  {
     name: 'Full Body Massage',
     description: 'A Full body massage offers relaxation, stress relief, improved circulation, and overall wellness.',
     price: '₹ 1999',
@@ -40,10 +46,10 @@ const services = [
   {
     name: 'Hot Stone Massage',
     description: 'A luxurious massage that uses heated stones to melt away tension and promote deep relaxation.',
-    price: '₹ 120',
+    price: '₹ 1200',
     image: '/services/hotStoneMassage.jpeg',
-  }
-]
+  },
+];
 
 export default function Services() {
   return (
@@ -58,7 +64,10 @@ export default function Services() {
         <div className="mt-10">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {services.map((service) => (
-              <div key={service.name} className="bg-gray-50 overflow-hidden shadow rounded-lg">
+              <div
+                key={service.name}
+                className="bg-gray-50 overflow-hidden shadow rounded-lg transition-transform transform hover:scale-105 hover:shadow-lg"
+              >
                 <Image
                   src={service.image}
                   alt={service.name}
@@ -77,6 +86,5 @@ export default function Services() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-
