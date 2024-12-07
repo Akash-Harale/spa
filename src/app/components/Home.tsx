@@ -8,12 +8,12 @@ export default function Home() {
     const [isFadingOut, setIsFadingOut] = useState(false);
     const phrases = [
         {
-            line1: "Doorstep Service Just for You",
-            line2: "Enjoy a Massage at Your Home"
-        },
-        {
             line1: "Experience Ultimate Relaxation",
             line2: "with Relaxing Touch Massage"
+        },
+        {
+            line1: "Doorstep Service Just for You",
+            line2: "Enjoy a Massage at Your Home"
         },
         {
             line1: "Unwind Your Body and Mind",
@@ -36,7 +36,7 @@ export default function Home() {
                 setCurrentPhrase((prev) => (prev + 1) % phrases.length);
                 setIsFadingOut(false);
             }, 500); // Matches the fade-out duration
-        }, 4000); // Total time before switching phrases (including fade animation)
+        }, 3400); // Total time before switching phrases (including fade animation)
         return () => clearInterval(interval);
     }, [phrases.length]);
 
