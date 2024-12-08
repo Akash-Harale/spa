@@ -1,37 +1,42 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { addBooking } from '../action/actions';
+
+type FormData = {
+    name: string;
+    email?: string; // Make email optional
+    phone: string;
+    service: string;
+    date: string;
+    time: string;
+};
 
 export default function BookServices() {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        service: '',
-        date: '',
-        time: '',
-    })
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<FormData>();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target
-        setFormData((prevData) => ({ ...prevData, [name]: value }))
-    }
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        // Here you would typically send the form data to your backend
-        console.log('Form submitted:', formData)
-        // Reset form after submission
-        setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            service: '',
-            date: '',
-            time: '',
-        })
-        alert('Booking submitted successfully!')
-    }
+    const onSubmit: SubmitHandler<FormData> = async (data) => {
+        try {
+            // Send form data to Supabase
+            const response = await addBooking(data, 'bookings'); // Replace 'bookings' with your Supabase table name
+            console.log('Booking response:', response);
+            alert('Booking submitted successfully!');
+            reset(); // Reset the form after successful submission
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error('Error submitting booking:', error.message);
+                alert(`Failed to submit booking: ${error.message}`);
+            } else {
+                console.error('Unknown error occurred:', error);
+                alert('An unknown error occurred while submitting the booking.');
+            }
+        }
+    };
 
     return (
         <section id="book" className="py-12 bg-indigo-50">
@@ -43,59 +48,69 @@ export default function BookServices() {
                     </p>
                 </div>
                 <div className="mt-10 max-w-xl mx-auto">
-                    <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
+                    <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-6">
+                        {/* Name */}
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                Name
+                                Name <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
-                                name="name"
                                 id="name"
-                                required
-                                value={formData.name}
-                                onChange={handleChange}
+                                {...register('name', { required: 'Name is required' })}
                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             />
+                            {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
                         </div>
+
+                        {/* Email */}
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email
+                                Email <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="email"
-                                name="email"
                                 id="email"
-                                required
-                                value={formData.email}
-                                onChange={handleChange}
+                                {...register('email', {
+                                    required: 'email is required',
+                                    pattern: {
+                                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                        message: 'Invalid email address',
+                                    },
+                                })}
                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             />
+                            {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
                         </div>
+
+                        {/* Phone */}
                         <div>
                             <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                                Phone
+                                Phone <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="tel"
-                                name="phone"
                                 id="phone"
-                                required
-                                value={formData.phone}
-                                onChange={handleChange}
+                                {...register('phone', {
+                                    required: 'Phone number is required',
+                                    pattern: {
+                                        value: /^[0-9]{10}$/,
+                                        message: 'Invalid phone number',
+                                    },
+                                })}
                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             />
+                            {errors.phone && <span className="text-red-500 text-sm">{errors.phone.message}</span>}
                         </div>
+
+                        {/* Service */}
                         <div>
                             <label htmlFor="service" className="block text-sm font-medium text-gray-700">
-                                Service
+                                Service <span className="text-red-500">*</span>
                             </label>
                             <select
-                                name="service"
                                 id="service"
-                                required
-                                value={formData.service}
-                                onChange={handleChange}
+                                {...register('service', { required: 'Service selection is required' })}
                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             >
                                 <option value="">Select a service</option>
@@ -104,35 +119,38 @@ export default function BookServices() {
                                 <option value="hot-stone">Hot Stone Massage</option>
                                 <option value="aromatherapy">Aromatherapy Massage</option>
                             </select>
+                            {errors.service && <span className="text-red-500 text-sm">{errors.service.message}</span>}
                         </div>
+
+                        {/* Date */}
                         <div>
                             <label htmlFor="date" className="block text-sm font-medium text-gray-700">
-                                Preferred Date
+                                Preferred Date <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="date"
-                                name="date"
                                 id="date"
-                                required
-                                value={formData.date}
-                                onChange={handleChange}
+                                {...register('date', { required: 'Date is required' })}
                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             />
+                            {errors.date && <span className="text-red-500 text-sm">{errors.date.message}</span>}
                         </div>
+
+                        {/* Time */}
                         <div>
                             <label htmlFor="time" className="block text-sm font-medium text-gray-700">
-                                Preferred Time
+                                Preferred Time <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="time"
-                                name="time"
                                 id="time"
-                                required
-                                value={formData.time}
-                                onChange={handleChange}
+                                {...register('time', { required: 'Time is required' })}
                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             />
+                            {errors.time && <span className="text-red-500 text-sm">{errors.time.message}</span>}
                         </div>
+
+                        {/* Submit */}
                         <div>
                             <button
                                 type="submit"
@@ -145,6 +163,5 @@ export default function BookServices() {
                 </div>
             </div>
         </section>
-    )
+    );
 }
-
